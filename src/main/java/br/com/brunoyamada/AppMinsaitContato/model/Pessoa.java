@@ -1,15 +1,39 @@
 package br.com.brunoyamada.AppMinsaitContato.model;
 
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "pessoas")
 public class Pessoa {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
+	@NotNull(message = "Nome obrigatório")
 	private String nome;
 	private String endereco;
 	private String cep;
 	private String cidade;
 	private String uf;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "pessoaId", cascade = CascadeType.ALL)
+	private List<Contato> contatos;
 	
 	public Pessoa() {
 	}
@@ -69,6 +93,14 @@ public class Pessoa {
 
 	public void setUf(String uf) {
 		this.uf = uf;
+	}
+	
+	public List<Contato> getContatos() {
+		return contatos;
+	}
+
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
 	}
 	
 	@Override
