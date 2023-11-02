@@ -103,6 +103,13 @@ public class Pessoa {
 		this.contatos = contatos;
 	}
 	
+	public String infMalaDireta() {
+		return endereco + 
+			   " - CEP: " + cep +
+			   " - " + cidade +
+			   "/" + uf;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

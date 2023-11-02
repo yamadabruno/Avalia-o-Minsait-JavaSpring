@@ -34,6 +34,10 @@ public class ContatoService implements ContatoServiceInterface {
 		return contatoRepository.findAll();
 	}
 	
+	public List<Contato> getByPessoa(Long pessoaId) {
+		return contatoRepository.findByPessoaId(pessoaId);
+	}
+	
 	@Override
 	public Contato update(Contato contato) {
 		Optional<Contato> contatoOld = contatoRepository.findById(contato.getId());
