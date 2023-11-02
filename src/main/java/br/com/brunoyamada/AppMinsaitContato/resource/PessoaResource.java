@@ -48,7 +48,7 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoas);
 	}
 	
-	@Operation(summary = "Lista Pessoas por ID")
+	@Operation(summary = "Busca Pessoas por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Pessoa>> getById(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
@@ -67,9 +67,12 @@ public class PessoaResource {
 	public ResponseEntity <PessoaRecord> getMalaDiretaById(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		
-		if(pessoa == null)
+		if(pessoa == null) {
 			return ResponseEntity.notFound().build();
-		
+		} else if(pessoa.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
 		Pessoa pessoaObj = pessoa.get();
 		PessoaRecord dto = new PessoaRecord(pessoaObj.getId(), pessoaObj.getNome(), pessoaObj.infMalaDireta());
 		
@@ -103,8 +106,11 @@ public class PessoaResource {
 	public ResponseEntity<Contato> adicionaContato(@PathVariable Long id, @RequestBody Contato contato) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		
-		if(pessoa == null)
+		if(pessoa == null) {
 			return ResponseEntity.notFound().build();
+		} else if(pessoa.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		
 		contato.setPessoaId(pessoa.get());
 		Contato newContato = contatoService.save(contato);

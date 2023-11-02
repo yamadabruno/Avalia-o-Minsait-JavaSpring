@@ -34,19 +34,25 @@ public class ContatoResource {
 	public ResponseEntity<List<Contato>> getAllContatos() {
 		List<Contato> contatos = contatoService.getAll();
 		
-		if(contatos == null)
+		if(contatos == null) {
 			return ResponseEntity.notFound().build();
+		} else if(contatos.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		
 		return ResponseEntity.ok(contatos);
 	}
 	
-	@Operation(summary = "Lista o Contato por ID")
+	@Operation(summary = "Busca o Contato por ID")
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Contato>> getById(@PathVariable Long id) {
 		Optional<Contato> contato = contatoService.getById(id);
 		
-		if(contato == null)
+		if(contato == null) {
 			return ResponseEntity.notFound().build();
+		} else if(contato.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		
 		return ResponseEntity.ok(contato);
 	}
