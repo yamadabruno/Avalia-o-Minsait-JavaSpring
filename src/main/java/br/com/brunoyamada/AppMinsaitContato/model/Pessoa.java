@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pessoas")
@@ -26,9 +27,12 @@ public class Pessoa {
 	@Column(nullable = false)
 	@NotNull(message = "Nome obrigatório")
 	private String nome;
+	
 	private String endereco;
 	private String cep;
 	private String cidade;
+	
+	@Size(max = 2, message = "UF não pode ter mais de dois caracteres")
 	private String uf;
 	
 	@JsonIgnore

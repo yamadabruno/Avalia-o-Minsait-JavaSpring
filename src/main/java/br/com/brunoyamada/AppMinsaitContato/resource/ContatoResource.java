@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.brunoyamada.AppMinsaitContato.model.Contato;
 import br.com.brunoyamada.AppMinsaitContato.service.ContatoService;
+import io.swagger.v3.oas.annotations.Operation;
 
 
 @RestController
@@ -28,6 +29,7 @@ public class ContatoResource {
 		this.contatoService = contatoService;
 	}
 
+	@Operation(summary = "Lista todos os Contatos")
 	@GetMapping
 	public ResponseEntity<List<Contato>> getAllContatos() {
 		List<Contato> contatos = contatoService.getAll();
@@ -38,8 +40,9 @@ public class ContatoResource {
 		return ResponseEntity.ok(contatos);
 	}
 	
+	@Operation(summary = "Lista o Contato por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Contato>> getById(@PathVariable Long id){
+	public ResponseEntity<Optional<Contato>> getById(@PathVariable Long id) {
 		Optional<Contato> contato = contatoService.getById(id);
 		
 		if(contato == null)
@@ -48,8 +51,9 @@ public class ContatoResource {
 		return ResponseEntity.ok(contato);
 	}
 	
+	@Operation(summary = "Atualiza o Contato por ID")
 	@PutMapping("/{id}")
-	public ResponseEntity<Contato> update(@PathVariable Long id, @RequestBody Contato contato){
+	public ResponseEntity<Contato> update(@PathVariable Long id, @RequestBody Contato contato) {
 		contato.setId(id);
 		Contato newContato = contatoService.update(contato);
 		
@@ -59,9 +63,10 @@ public class ContatoResource {
 		return ResponseEntity.ok(newContato);
 	}
 
+	@Operation(summary = "Deleta o Contato por ID")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<?> delete(@PathVariable Long id){
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Optional<Contato> contato = contatoService.getById(id);
 		
 		if(contato.isEmpty())

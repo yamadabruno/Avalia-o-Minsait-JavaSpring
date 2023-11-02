@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.brunoyamada</groupId>
-	<artifactId>AppMinsaitContato</artifactId>
+	<artifactId>AppContato</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AppMinsaitContato</name>
-	<description>Avaliação Java / Spring: API Rest para Controle de Contatos</description>
+	<name>AppContato</name>
+	<description>Spring: API Rest para Controle de Contatos</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -21,6 +21,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -35,6 +36,11 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -42,11 +48,6 @@
 		<dependency>
 		    <groupId>org.hibernate.validator</groupId>
 		    <artifactId>hibernate-validator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>br.com.brunoyamada</groupId>
-			<artifactId>AppContato</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

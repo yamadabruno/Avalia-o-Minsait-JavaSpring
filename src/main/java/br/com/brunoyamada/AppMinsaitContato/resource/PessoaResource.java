@@ -21,6 +21,7 @@ import br.com.brunoyamada.AppMinsaitContato.model.Pessoa;
 import br.com.brunoyamada.AppMinsaitContato.record.PessoaRecord;
 import br.com.brunoyamada.AppMinsaitContato.service.ContatoService;
 import br.com.brunoyamada.AppMinsaitContato.service.PessoaService;
+import io.swagger.v3.oas.annotations.Operation;
 
 
 @RestController
@@ -36,6 +37,7 @@ public class PessoaResource {
 		this.pessoaService = pessoaService;
 	}
 	
+	@Operation(summary = "Lista todas as Pessoas")
 	@GetMapping
 	public ResponseEntity<List<Pessoa>> getAllPessoas() {
 		List<Pessoa> pessoas = pessoaService.getAll();
@@ -46,8 +48,9 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoas);
 	}
 	
+	@Operation(summary = "Lista Pessoas por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Pessoa>> getById(@PathVariable Long id){
+	public ResponseEntity<Optional<Pessoa>> getById(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		
 		if(pessoa == null) {
@@ -59,8 +62,9 @@ public class PessoaResource {
 		return ResponseEntity.ok(pessoa);
 	}
 	
+	@Operation(summary = "Busca Mala Direta por ID")
 	@GetMapping("/maladireta/{id}")
-	public ResponseEntity <PessoaRecord> getMalaDiretaById(@PathVariable Long id){
+	public ResponseEntity <PessoaRecord> getMalaDiretaById(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		
 		if(pessoa == null)
@@ -72,8 +76,9 @@ public class PessoaResource {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@Operation(summary = "Cria Contato")
 	@GetMapping("/{id}/contatos")
-	public ResponseEntity <List<Contato>> getContatos(@PathVariable Long id){
+	public ResponseEntity <List<Contato>> getContatos(@PathVariable Long id) {
 		List<Contato> listContato = contatoService.getByPessoa(id);
 		
 		if(listContato.isEmpty())
@@ -82,8 +87,9 @@ public class PessoaResource {
 		return ResponseEntity.ok(listContato);
 	}
 
+	@Operation(summary = "Cria Pessoa")
 	@PostMapping
-	public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa){
+	public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa) {
 		Pessoa newPessoa = pessoaService.save(pessoa);
 		
 		if(newPessoa == null)
@@ -92,6 +98,7 @@ public class PessoaResource {
 		return ResponseEntity.ok(newPessoa);
 	}
 	
+	@Operation(summary = "Lista de Contatos por ID da Pessoa")
 	@PostMapping("/{id}/contatos")
 	public ResponseEntity<Contato> adicionaContato(@PathVariable Long id, @RequestBody Contato contato) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
@@ -103,9 +110,10 @@ public class PessoaResource {
 		Contato newContato = contatoService.save(contato);
 		return ResponseEntity.ok(newContato);
 	}
-
+	
+	@Operation(summary = "Atualiza Pessoa por ID")
 	@PutMapping("/{id}")
-	public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa pessoa){
+	public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody Pessoa pessoa) {
 		pessoa.setId(id);
 		Pessoa newPessoa = pessoaService.update(pessoa);
 		
@@ -115,9 +123,10 @@ public class PessoaResource {
 		return ResponseEntity.ok(newPessoa);
 	}
 
+	@Operation(summary = "Deleta Pessoa por ID")
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<?> delete(@PathVariable Long id){
+	public ResponseEntity<?> delete(@PathVariable Long id) {
 		Optional<Pessoa> pessoa = pessoaService.getById(id);
 		
 		if(pessoa.isEmpty())

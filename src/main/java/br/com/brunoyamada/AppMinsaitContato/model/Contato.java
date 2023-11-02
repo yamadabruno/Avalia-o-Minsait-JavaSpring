@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -26,7 +26,6 @@ public class Contato {
 	
 	@Column(nullable = false)
 	@NotNull(message = "Tipo de contato obrigatório")
-	@NotBlank(message = "Tipo de contato não pode ser vazio")
 	private Integer tipoContato;
 	
 	@Column(nullable = false)
