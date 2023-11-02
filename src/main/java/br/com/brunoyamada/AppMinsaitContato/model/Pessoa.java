@@ -3,6 +3,8 @@ package br.com.brunoyamada.AppMinsaitContato.model;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -13,8 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pessoas")
@@ -26,13 +28,20 @@ public class Pessoa {
 	
 	@Column(nullable = false)
 	@NotNull(message = "Nome obrigatório")
+	@NotBlank(message = "Nome não pode ser vazio")
+	@Length(max = 100, message = "Nome não pode conter mais de 100 caracteres")
 	private String nome;
 	
+	@Length(max = 120, message = "Endereço não pode conter mais de 120 caracteres")
 	private String endereco;
+	
+	@Length(max = 20, message = "Cep não pode conter mais de 20 caracteres")
 	private String cep;
+	
+	@Length(max = 100, message = "Cidade não pode conter mais de 100 caracteres")
 	private String cidade;
 	
-	@Size(max = 2, message = "UF não pode ter mais de dois caracteres")
+	@Length(max = 2, message = "Uf não pode conter mais de 2 caracteres")
 	private String uf;
 	
 	@JsonIgnore

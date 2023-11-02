@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.brunoyamada.AppMinsaitContato.exception.ResourceNotFoundException;
 import br.com.brunoyamada.AppMinsaitContato.model.Pessoa;
 import br.com.brunoyamada.AppMinsaitContato.repository.PessoaRepository;
 import br.com.brunoyamada.AppMinsaitContato.service.interfaces.PessoaServiceInterface;
@@ -24,8 +25,9 @@ public class PessoaService implements PessoaServiceInterface {
 	}
 
 	@Override
-	public Optional<Pessoa> getById(Long id) {
-		return pessoaRepository.findById(id);
+	public Pessoa getById(Long id) {
+		return pessoaRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Pessoa com id " + id + " não encontrada"));
 	}
 
 	@Override

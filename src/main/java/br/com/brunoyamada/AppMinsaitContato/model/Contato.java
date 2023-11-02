@@ -2,6 +2,8 @@ package br.com.brunoyamada.AppMinsaitContato.model;
 
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -13,7 +15,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -26,10 +30,14 @@ public class Contato {
 	
 	@Column(nullable = false)
 	@NotNull(message = "Tipo de contato obrigatório")
+	@Max(value = 1, message = "Tipo contato não pode ser maior que 1")
+	@Min(value = 0, message = "Tipo contato não pode ser menor que 0")
 	private Integer tipoContato;
 	
 	@Column(nullable = false)
 	@NotNull(message = "Contato obrigatório")
+	@NotBlank(message = "Contato não pode ser vazio")
+	@Length(max = 30, message = "Contato não pode conter mais de 30 caracteres")
 	private String contato;
 	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)

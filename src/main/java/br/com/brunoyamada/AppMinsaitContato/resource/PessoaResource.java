@@ -1,7 +1,6 @@
 package br.com.brunoyamada.AppMinsaitContato.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,38 +49,25 @@ public class PessoaResource {
 	
 	@Operation(summary = "Busca Pessoas por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Pessoa>> getById(@PathVariable Long id) {
-		Optional<Pessoa> pessoa = pessoaService.getById(id);
-		
-		if(pessoa == null) {
-			return ResponseEntity.notFound().build();
-		} else if(pessoa.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Pessoa> getById(@PathVariable Long id) {
+		Pessoa pessoa = pessoaService.getById(id);
 		
 		return ResponseEntity.ok(pessoa);
 	}
 	
 	@Operation(summary = "Busca Mala Direta por ID")
 	@GetMapping("/maladireta/{id}")
-	public ResponseEntity <PessoaRecord> getMalaDiretaById(@PathVariable Long id) {
-		Optional<Pessoa> pessoa = pessoaService.getById(id);
-		
-		if(pessoa == null) {
-			return ResponseEntity.notFound().build();
-		} else if(pessoa.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<PessoaRecord> getMalaDiretaById(@PathVariable Long id) {
+		Pessoa pessoa = pessoaService.getById(id);
 
-		Pessoa pessoaObj = pessoa.get();
-		PessoaRecord dto = new PessoaRecord(pessoaObj.getId(), pessoaObj.getNome(), pessoaObj.infMalaDireta());
+		PessoaRecord dto = new PessoaRecord(pessoa.getId(), pessoa.getNome(), pessoa.infMalaDireta());
 		
 		return ResponseEntity.ok(dto);
 	}
 	
 	@Operation(summary = "Cria Contato")
 	@GetMapping("/{id}/contatos")
-	public ResponseEntity <List<Contato>> getContatos(@PathVariable Long id) {
+	public ResponseEntity<List<Contato>> getContatos(@PathVariable Long id) {
 		List<Contato> listContato = contatoService.getByPessoa(id);
 		
 		if(listContato.isEmpty())
@@ -104,15 +90,9 @@ public class PessoaResource {
 	@Operation(summary = "Lista de Contatos por ID da Pessoa")
 	@PostMapping("/{id}/contatos")
 	public ResponseEntity<Contato> adicionaContato(@PathVariable Long id, @RequestBody Contato contato) {
-		Optional<Pessoa> pessoa = pessoaService.getById(id);
-		
-		if(pessoa == null) {
-			return ResponseEntity.notFound().build();
-		} else if(pessoa.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		contato.setPessoaId(pessoa.get());
+		Pessoa pessoa = pessoaService.getById(id);
+
+		contato.setPessoaId(pessoa);
 		Contato newContato = contatoService.save(contato);
 		return ResponseEntity.ok(newContato);
 	}
@@ -133,10 +113,7 @@ public class PessoaResource {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Optional<Pessoa> pessoa = pessoaService.getById(id);
-		
-		if(pessoa.isEmpty())
-			return ResponseEntity.notFound().build();
+		Pessoa pessoa = pessoaService.getById(id);
 		
 		pessoaService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -156,7 +156,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"contato\": \"11 971787978\",\r\n    \"tipoContato\": \"1\"\r\n}",
+					"raw": "{\r\n    \"contato\": \"11 971787978\",\r\n    \"tipoContato\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

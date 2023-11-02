@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.brunoyamada.AppMinsaitContato.exception.ResourceNotFoundException;
 import br.com.brunoyamada.AppMinsaitContato.model.Contato;
 import br.com.brunoyamada.AppMinsaitContato.repository.ContatoRepository;
 import br.com.brunoyamada.AppMinsaitContato.service.interfaces.ContatoServiceInterface;
@@ -25,8 +26,9 @@ public class ContatoService implements ContatoServiceInterface {
 	}
 
 	@Override
-	public Optional<Contato> getById(Long id) {
-		return contatoRepository.findById(id);
+	public Contato getById(Long id) {
+		return contatoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Contato com id " + id + " não encontrado"));
 	}
 
 	@Override

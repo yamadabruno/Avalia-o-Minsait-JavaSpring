@@ -1,7 +1,6 @@
 package br.com.brunoyamada.AppMinsaitContato.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,14 +44,8 @@ public class ContatoResource {
 	
 	@Operation(summary = "Busca o Contato por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Contato>> getById(@PathVariable Long id) {
-		Optional<Contato> contato = contatoService.getById(id);
-		
-		if(contato == null) {
-			return ResponseEntity.notFound().build();
-		} else if(contato.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Contato> getById(@PathVariable Long id) {
+		Contato contato = contatoService.getById(id);
 		
 		return ResponseEntity.ok(contato);
 	}
@@ -73,10 +66,7 @@ public class ContatoResource {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Optional<Contato> contato = contatoService.getById(id);
-		
-		if(contato.isEmpty())
-			return ResponseEntity.notFound().build();
+		Contato contato = contatoService.getById(id);
 		
 		contatoService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
