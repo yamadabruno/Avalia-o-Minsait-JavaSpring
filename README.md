@@ -30,7 +30,7 @@ Spring initializr (Project: Maven, Language: Java, Spring Boot: 3.0.12, Packagin
 
 - Java JDK 17;
 - Maven 3.9.5;
-- MySQL 8 Workbench;
+- MySQL 8;
 - Postman;
 
 Adicionado as dependências spring-boot-starter-data-jpa, com.fasterxml.jackson.core e hibernate-validator. 
@@ -55,7 +55,7 @@ mvn spring-boot:run
 
 Collection disponibilizada no arquivo:
 ```
-first_challenge_collection.json
+MinsaitControleContato.postman_collection.json
 ```
 
 Link para acessar documentação swagger:
