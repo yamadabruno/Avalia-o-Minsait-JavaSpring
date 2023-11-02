@@ -55,7 +55,7 @@ mvn spring-boot:run
 
 Collection disponibilizada no arquivo:
 ```
-first_challenge_collection.json
+MinsaitControleContato.postman_collection.json
 ```
 
 Link para acessar documentação swagger:
